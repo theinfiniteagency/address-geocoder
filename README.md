@@ -4,10 +4,10 @@ Accepts a CSV with an address, city, zip and queries coordinates from Google Map
 
 ## Usage
 
-Check column mappings in app.js and run the app.
+Add a Google API Key and check column mappings in app.js.
 
 ```
 $ node app.js
 ```
 
-Then visit http://localhost:4000 to upload a CSV.
+Run the app then visit http://localhost:4000 to upload a CSV.

@@ -7,6 +7,8 @@ const Papa = require('papaparse')
 const stream = require('stream')
 const RateLimiter = require('limiter').RateLimiter
 
+const API_KEY = ''
+
 let upload = multer()
 
 app.post('/upload', upload.single('locations'), (req, res) => {
@@ -41,7 +43,7 @@ app.post('/upload', upload.single('locations'), (req, res) => {
 
       let params = {
         params: {
-          key: 'AIzaSyBQAE-6I6Hcv6JsyjVHu6lcI7yK47-FyOw',
+          key: API_KEY,
           address: full
         }
       }
