@@ -7,7 +7,7 @@ const Papa = require('papaparse')
 const stream = require('stream')
 const RateLimiter = require('limiter').RateLimiter
 
-const API_KEY = ''
+const API_KEY = 'AIzaSyDBCQDfrxNAg_0f8fAqMLiimeJ8piB5XGY'
 
 let upload = multer()
 
@@ -107,7 +107,34 @@ app.use((err, req, res, next) => {
 
 module.exports = app;
 
-const port = Number(process.env.PORT || 4040);
-app.listen(port, () => {
-  console.log('Upload a CSV at http://localhost:' + port)
-})
+// Accept an address as an argument
+if(process.argv[2]) {
+  let params = {
+    params: {
+      key: API_KEY,
+      address: process.argv[2]
+    }
+  }
+  console.log('Getting coords for: '+process.argv[2])
+  axios.get('https://maps.googleapis.com/maps/api/geocode/json', params).then((results) => {
+    if(results.data.results.length == 0) {
+      console.error('Failed', results.data)
+    } else {
+      let location = results.data.results[0]
+      let data = {
+        latitude: location.geometry.location.lat,
+        longitude: location.geometry.location.lng
+      }
+      console.log(data)
+    }
+    process.exit(1)
+  }).catch((err) => {
+    console.error(err)
+    process.exit(1)
+  })
+} else {
+  const port = Number(process.env.PORT || 4040);
+  app.listen(port, () => {
+    console.log('Upload a CSV at http://localhost:' + port)
+  })
+}
